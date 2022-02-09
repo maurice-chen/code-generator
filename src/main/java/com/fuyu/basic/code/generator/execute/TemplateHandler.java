@@ -64,7 +64,7 @@ public class TemplateHandler {
         if (!dic.exists()) {
             dic.mkdirs();
         }
-        String filePath  = dicPath + File.separator + table.getEntityName() + ".java";
+        String filePath  = dicPath + File.separator + table.getEntityName() + "Entity.java";
         createFile(table, params, template, filePath);
     }
 

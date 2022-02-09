@@ -1,7 +1,7 @@
 package ${basePackage}.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import ${basePackage}.dao.entity.${table.entityName};
+import ${basePackage}.dao.entity.${table.entityName}Entity;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  *
  * <p>Table: ${table.tableName} - ${table.tableComment}</p>
  *
- * @see ${table.entityName}
+ * @see ${table.entityName}Entity
  *
  * @author ${author}
  *
@@ -18,6 +18,6 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface ${table.entityName}Dao extends BaseMapper<${table.entityName}> {
+public interface ${table.entityName}Dao extends BaseMapper<${table.entityName}Entity> {
 
 }

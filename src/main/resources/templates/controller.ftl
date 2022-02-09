@@ -1,26 +1,25 @@
 package ${basePackage}.controller;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.data.web.PageableDefault;
+import com.github.dactiv.basic.authentication.domain.entity.DepartmentEntity;
+import com.github.dactiv.basic.authentication.service.DepartmentService;
+import com.github.dactiv.basic.commons.enumeration.ResourceSourceEnum;
+import com.github.dactiv.framework.commons.RestResult;
+import com.github.dactiv.framework.commons.page.Page;
+import com.github.dactiv.framework.commons.page.PageRequest;
+import com.github.dactiv.framework.mybatis.plus.MybatisPlusQueryGenerator;
+import com.github.dactiv.framework.security.enumerate.ResourceType;
+import com.github.dactiv.framework.security.plugin.Plugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
-import com.github.dactiv.framework.commons.RestResult;
-import com.github.dactiv.framework.spring.security.plugin.Plugin;
-import com.github.dactiv.framework.spring.security.enumerate.ResourceType;
-import com.github.dactiv.framework.spring.security.enumerate.ResourceSource;
-import com.github.dactiv.framework.spring.web.filter.generator.mybatis.MybatisPlusQueryGenerator;
-
-import ${basePackage}.entity.${table.entityName};
-import ${basePackage}.service.${table.entityName}Service;
-
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
-import javax.validation.Valid;
-import javax.servlet.http.HttpServletRequest;
+import ${basePackage}.entity.${table.entityName}Entity;
+import ${basePackage}.service.${table.entityName}Service;
+
 
 /**
  *
@@ -28,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * <p>Table: ${table.tableName} - ${table.tableComment}</p>
  *
- * @see ${table.entityName}
+ * @see ${table.entityName}Entity
  *
  * @author ${author}
  *
@@ -41,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
     id = "${table.pluginName}",
     parent = "system",
     type = ResourceType.Menu,
-    sources = "Console"
+    sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE
 )
 public class ${table.entityName}Controller {
 
@@ -62,10 +61,10 @@ public class ${table.entityName}Controller {
      * @see ${table.entityName}
      */
     @GetMapping("page")
-    @Plugin(name = "获取分页", sources = "Console")
+    @Plugin(name = "获取分页", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:page]')")
-    public Page<${table.entityName}> page(@PageableDefault Pageable pageable, HttpServletRequest request) {
-        return ${table.entityVarName}Service.find${table.entityName}Page(
+    public Page<${table.entityName}> page(PageRequest pageRequest, HttpServletRequest request) {
+        return ${table.entityVarName}Service.findPage(
                 pageable,
                 queryGenerator.getQueryWrapperByHttpRequest(request)
         );
@@ -82,9 +81,9 @@ public class ${table.entityName}Controller {
      */
     @GetMapping("get/{id}")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:get]')")
-    @Plugin(name = "获取实体", sources = "Console")
+    @Plugin(name = "获取实体", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
     public ${table.entityName} get(@PathVariable("id") Integer id) {
-        return ${table.entityVarName}Service.get${table.entityName}(id);
+        return ${table.entityVarName}Service.get(id);
     }
 
     /**
@@ -96,10 +95,10 @@ public class ${table.entityName}Controller {
      */
     @PostMapping("save")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:save]')")
-    @Plugin(name = "保存实体", sources = "Console", audit = true)
-    public RestResult<Map<String, Integer>> save(@Valid ${table.entityName} entity) {
-        ${table.entityVarName}Service.save${table.entityName}(entity);
-        return RestResult.ofSuccess("保存成功", entity.toIdEntityMap());
+    @Plugin(name = "保存实体", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true)
+    public RestResult<Integer> save(@Valid ${table.entityName} entity) {
+        ${table.entityVarName}Service.save(entity);
+        return RestResult.ofSuccess("保存成功", entity.getId());
     }
 
     /**
@@ -111,9 +110,9 @@ public class ${table.entityName}Controller {
      */
     @PostMapping("delete")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:delete]')")
-    @Plugin(name = "删除实体", sources = "Console", audit = true)
+    @Plugin(name = "删除实体", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true)
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
-        ${table.entityVarName}Service.delete${table.entityName}(ids);
+        ${table.entityVarName}Service.deleteById(ids);
         return RestResult.of("删除" + ids.size() + "条记录成功");
     }
 

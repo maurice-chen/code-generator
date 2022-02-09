@@ -1,7 +1,7 @@
 package ${basePackage}.service;
 
 import ${basePackage}.dao.${table.entityName}Dao;
-import ${basePackage}.entity.${table.entityName};
+import ${basePackage}.entity.${table.entityName}Entity;
 
 import com.github.dactiv.framework.mybatis.plus.service.BasicService;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * <p>Table: ${table.tableName} - ${table.tableComment}</p>
  *
- * @see ${table.entityName}
+ * @see ${table.entityName}Entity
  *
  * @author ${author}
  *

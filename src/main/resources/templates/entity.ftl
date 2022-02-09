@@ -34,7 +34,7 @@ import javax.validation.constraints.*;
 @EqualsAndHashCode
 @Alias("${table.entityVarName}")
 @TableName("${table.tableName}")
-public class ${table.entityName} {
+public class ${table.entityName}Entity {
 
     /**
     * 主键

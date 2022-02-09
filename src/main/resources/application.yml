@@ -3,7 +3,7 @@ spring:
     url: jdbc:mysql://localhost:3306/authentication?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     username: root
-    password:
+    password: 19880602
     type: com.zaxxer.hikari.HikariDataSource
 
 jcode:
@@ -20,7 +20,4 @@ jcode:
     - id
     - creationTime
   tableNames:
-    - tb_authentication_info
-    - tb_console_user
-    - tb_group
-    - tb_member_user
+    - tb_department
