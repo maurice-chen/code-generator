@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/authentication?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/cmis_basic?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
     driverClassName: com.mysql.jdbc.Driver
     username: root
     password: 19880602
@@ -8,16 +8,20 @@ spring:
 
 jcode:
   author: maurice.chen
+  urlPrefix: basic
   basePackage: com.github.dactiv.basic.authentication
   genController: true
   genService: true
   genEntity: true
   genDao: true
-  genDoc: false
+  genDoc: true
   genMapperXml: false
   stripPrefix: tb_
   ignoreProperties:
     - id
     - creationTime
   tableNames:
-    - tb_department
+    - tb_class_grades
+    - tb_lift_record
+    - tb_student
+    - tb_student_family

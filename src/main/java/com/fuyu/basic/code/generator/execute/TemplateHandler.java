@@ -166,7 +166,7 @@ public class TemplateHandler {
     public void genDoc(String targetDic, Table table) throws Exception {
         Map<String, Object> params = buildParams(table);
 
-        Template template = configuration.getTemplate("doc.ftl");
+        Template template = configuration.getTemplate("apifox.ftl");
         String dicPath = targetDic + File.separator + "doc";
         File dic = new File(dicPath);
         if (!dic.exists()) {

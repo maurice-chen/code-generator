@@ -4,6 +4,8 @@ import java.util.List;
 
 public class Table {
 
+    private Long id;
+
     /**
      * 表名称
      */
@@ -45,6 +47,14 @@ public class Table {
     private List<Column> columns;
 
     public Table() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean hasDate() {

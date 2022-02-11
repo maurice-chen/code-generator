@@ -1,7 +1,5 @@
 package ${basePackage}.controller;
 
-import com.github.dactiv.basic.authentication.domain.entity.DepartmentEntity;
-import com.github.dactiv.basic.authentication.service.DepartmentService;
 import com.github.dactiv.basic.commons.enumeration.ResourceSourceEnum;
 import com.github.dactiv.framework.commons.RestResult;
 import com.github.dactiv.framework.commons.page.Page;
@@ -53,19 +51,19 @@ public class ${table.entityName}Controller {
     /**
      * 获取 table: ${table.tableName} 分页信息
      *
-     * @param pageable 分页信息
+     * @param pageRequest 分页信息
      * @param request  http servlet request
      *
      * @return 分页实体
      *
-     * @see ${table.entityName}
+     * @see ${table.entityName}Entity
      */
-    @GetMapping("page")
+    @PostMapping("page")
     @Plugin(name = "获取分页", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:page]')")
-    public Page<${table.entityName}> page(PageRequest pageRequest, HttpServletRequest request) {
+    public Page<${table.entityName}Entity> page(PageRequest pageRequest, HttpServletRequest request) {
         return ${table.entityVarName}Service.findPage(
-                pageable,
+                pageRequest,
                 queryGenerator.getQueryWrapperByHttpRequest(request)
         );
     }
@@ -77,12 +75,12 @@ public class ${table.entityName}Controller {
      *
      * @return ${table.tableName} 实体
      *
-     * @see ${table.entityName}
+     * @see ${table.entityName}Entity
      */
-    @GetMapping("get/{id}")
+    @GetMapping("get")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:get]')")
     @Plugin(name = "获取实体", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
-    public ${table.entityName} get(@PathVariable("id") Integer id) {
+    public ${table.entityName}Entity get(@RequestParam Integer id) {
         return ${table.entityVarName}Service.get(id);
     }
 
@@ -91,12 +89,12 @@ public class ${table.entityName}Controller {
      *
      * @param entity ${table.tableName} 实体
      *
-     * @see ${table.entityName}
+     * @see ${table.entityName}Entity
      */
     @PostMapping("save")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:save]')")
     @Plugin(name = "保存实体", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true)
-    public RestResult<Integer> save(@Valid ${table.entityName} entity) {
+    public RestResult<Integer> save(@Valid ${table.entityName}Entity entity) {
         ${table.entityVarName}Service.save(entity);
         return RestResult.ofSuccess("保存成功", entity.getId());
     }
@@ -106,7 +104,7 @@ public class ${table.entityName}Controller {
      *
      * @param ids 主键 ID 值集合
      *
-     * @see ${table.entityName}
+     * @see ${table.entityName}Entity
      */
     @PostMapping("delete")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:delete]')")

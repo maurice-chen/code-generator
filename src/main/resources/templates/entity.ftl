@@ -1,9 +1,6 @@
 <#macro getPrefix javaTypeName=""><#if javaTypeName == "Boolean">is<#else>get</#if></#macro>
 package ${basePackage}.entity;
 
-<#if table.hasDate()>
-import java.util.Date;
-</#if>
 <#if table.hasBigDecimal()>
 import java.math.BigDecimal;
 </#if>
@@ -11,7 +8,9 @@ import lombok.*;
 
 import org.apache.ibatis.type.Alias;
 import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.github.dactiv.framework.commons.id.number.NumberIdEntity;
+
+import java.util.*;
 
 <#--
 import javax.persistence.*;
@@ -34,7 +33,7 @@ import javax.validation.constraints.*;
 @EqualsAndHashCode
 @Alias("${table.entityVarName}")
 @TableName("${table.tableName}")
-public class ${table.entityName}Entity {
+public class ${table.entityName}Entity implements NumberIdEntity<Integer>{
 
     /**
     * 主键

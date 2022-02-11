@@ -1,5 +1,6 @@
 package com.fuyu.basic.code.generator.execute;
 
+import com.fuyu.basic.code.generator.model.JsonType;
 import com.fuyu.basic.code.generator.model.Table;
 import com.fuyu.basic.code.generator.JavaCodeProperties;
 import com.fuyu.basic.code.generator.model.Column;
@@ -104,6 +105,7 @@ public class TableHandler implements DisposableBean {
             table.setTableComment(getTableComment(tableName));
             table.setControllerPath(StringUtil.replace(entityName, "_", "/"));
             table.setPluginName(entityName);
+            table.setId(System.currentTimeMillis());
 
             for (Column column : table.getColumns()) {
                 if (column.isPrimaryKeyFlag()) {
@@ -161,12 +163,12 @@ public class TableHandler implements DisposableBean {
 
             JDBCType jdbcType = JDBCType.valueOf(jdbcTypeInt);
             JavaType javaType = JavaType.valueOf(jdbcTypeInt);
+            JsonType jsonType = JsonType.valueOf(jdbcTypeInt);
             // 列名
             String columnName = rs.getString("COLUMN_NAME");
 
             column.setJavaName(StringUtil.lineToHump(columnName, true));
             column.setJavaVarName(StringUtil.lineToHump(columnName));
-            column.setJavaTypeName(javaType.getClzss().getSimpleName());
 
             boolean primaryKeyFlag = primaryKeys.contains(columnName);
 
@@ -174,9 +176,15 @@ public class TableHandler implements DisposableBean {
             String tableName = rs.getString("TABLE_NAME");
             column.setPrimaryKeyFlag(primaryKeyFlag);
             column.setColumnName(columnName);
+
             column.setJdbcType(jdbcTypeInt);
             column.setJdbcTypeName(jdbcType.getName());
+
             column.setJavaType(javaType);
+            column.setJavaTypeName(javaType.getClzss().getSimpleName());
+
+            column.setJsonType(jsonType);
+            column.setJsonTypeName(jsonType.getType());
 
             column.setSize(rs.getInt("COLUMN_SIZE"));
             column.setNullable(rs.getBoolean("NULLABLE"));

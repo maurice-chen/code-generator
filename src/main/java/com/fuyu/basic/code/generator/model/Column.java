@@ -31,6 +31,16 @@ public class Column {
     private JavaType javaType;
 
     /**
+     * json 类型
+     */
+    private JsonType jsonType;
+
+    /**
+     * json 类型名称
+     */
+    private String jsonTypeName;
+
+    /**
      * 类型名称
      */
     private String javaTypeName;
@@ -191,5 +201,21 @@ public class Column {
 
     public void setUnique(boolean unique) {
         this.unique = unique;
+    }
+
+    public JsonType getJsonType() {
+        return jsonType;
+    }
+
+    public void setJsonType(JsonType jsonType) {
+        this.jsonType = jsonType;
+    }
+
+    public String getJsonTypeName() {
+        return jsonTypeName;
+    }
+
+    public void setJsonTypeName(String jsonTypeName) {
+        this.jsonTypeName = jsonTypeName;
     }
 }
