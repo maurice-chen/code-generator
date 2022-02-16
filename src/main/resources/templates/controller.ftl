@@ -42,11 +42,31 @@ import ${basePackage}.service.${table.entityName}Service;
 )
 public class ${table.entityName}Controller {
 
-    @Autowired
-    private ${table.entityName}Service ${table.entityVarName}Service;
+    private final ${table.entityName}Service ${table.entityVarName}Service;
 
-    @Autowired
-    private MybatisPlusQueryGenerator<?> queryGenerator;
+    private final MybatisPlusQueryGenerator<?> queryGenerator;
+
+    public ${table.entityName}Controller(MybatisPlusQueryGenerator<?> queryGenerator,
+                                         ${table.entityName}Service ${table.entityVarName}Service) {
+        this.${table.entityVarName}Service = ${table.entityVarName}Service;
+        this.queryGenerator = queryGenerator;
+    }
+
+    /**
+     * 获取 table: ${table.tableName} 实体集合
+     *
+     * @param request  http servlet request
+     *
+     * @return ${table.tableName} 实体集合
+     *
+     * @see ${table.entityName}Entity
+    */
+    @PostMapping("find")
+    @PreAuthorize("isAuthenticated()")
+    @Plugin(name = "获取全部", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
+    public List<${table.entityName}Entity> find(HttpServletRequest request) {
+        return ${table.entityVarName}Service.find(queryGenerator.getQueryWrapperByHttpRequest(request));
+    }
 
     /**
      * 获取 table: ${table.tableName} 分页信息
@@ -94,7 +114,7 @@ public class ${table.entityName}Controller {
     @PostMapping("save")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:save]')")
     @Plugin(name = "保存实体", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true)
-    public RestResult<Integer> save(@Valid ${table.entityName}Entity entity) {
+    public RestResult<Integer> save(@Valid @RequestBody ${table.entityName}Entity entity) {
         ${table.entityVarName}Service.save(entity);
         return RestResult.ofSuccess("保存成功", entity.getId());
     }
