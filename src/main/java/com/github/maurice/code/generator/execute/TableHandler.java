@@ -76,7 +76,7 @@ public class TableHandler implements DisposableBean {
         Table table = null;
 
         try {
-            ResultSet resultSet = connection.getMetaData().getTables(null, null, tableName, new String[] { "TABLE" });
+            ResultSet resultSet = connection.getMetaData().getTables(connection.getCatalog(), "%", tableName, new String[] { "TABLE" });
             if (!resultSet.next()) {
                 LOGGER.error("表[{}]该表不存在", tableName);
                 resultSet.close();
@@ -126,7 +126,7 @@ public class TableHandler implements DisposableBean {
         List<String> primaryKeys = new ArrayList<>();
         try {
             // 获取表内的主键列表
-            ResultSet resultSet = connection.getMetaData().getPrimaryKeys(null, null, tableName);
+            ResultSet resultSet = connection.getMetaData().getPrimaryKeys(connection.getCatalog(), connection.getSchema(), tableName);
             while (resultSet.next()) {
                 // 获取主键的列名
                 String pkColumnName = resultSet.getString("COLUMN_NAME");
@@ -143,7 +143,7 @@ public class TableHandler implements DisposableBean {
         List<Column> columns = new ArrayList<>();
         try {
             // 获取列信息
-            ResultSet resultSet = connection.getMetaData().getColumns(null, null, tableName, "%");
+            ResultSet resultSet = connection.getMetaData().getColumns(connection.getCatalog(), "%", tableName, "%");
             while (resultSet.next()) {
                 columns.add(getTableColumn(resultSet, primaryKeys));
             }
