@@ -1,10 +1,7 @@
-package com.fuyu.basic.code.generator.model;
+package com.github.maurice.code.generator.model;
 
-import java.math.BigDecimal;
 import java.sql.JDBCType;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public enum JsonType {

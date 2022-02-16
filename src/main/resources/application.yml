@@ -21,7 +21,5 @@ jcode:
     - id
     - creationTime
   tableNames:
-    - tb_class_grades
-    - tb_lift_record
-    - tb_student
-    - tb_student_family
+    - tb_attachment
+    - tb_lesson_preparation

@@ -1,7 +1,7 @@
-package com.fuyu.basic.code.generator.execute;
+package com.github.maurice.code.generator.execute;
 
-import com.fuyu.basic.code.generator.model.Table;
-import com.fuyu.basic.code.generator.JavaCodeProperties;
+import com.github.maurice.code.generator.model.Table;
+import com.github.maurice.code.generator.JavaCodeProperties;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;

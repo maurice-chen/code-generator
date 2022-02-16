@@ -1,8 +1,8 @@
-package com.fuyu.basic.code.generator;
+package com.github.maurice.code.generator;
 
-import com.fuyu.basic.code.generator.execute.TableHandler;
-import com.fuyu.basic.code.generator.model.Table;
-import com.fuyu.basic.code.generator.execute.TemplateHandler;
+import com.github.maurice.code.generator.execute.TableHandler;
+import com.github.maurice.code.generator.model.Table;
+import com.github.maurice.code.generator.execute.TemplateHandler;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;

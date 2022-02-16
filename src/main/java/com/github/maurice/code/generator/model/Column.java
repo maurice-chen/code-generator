@@ -1,4 +1,4 @@
-package com.fuyu.basic.code.generator.model;
+package com.github.maurice.code.generator.model;
 
 public class Column {
 

@@ -1,4 +1,4 @@
-package com.fuyu.basic.code.generator;
+package com.github.maurice.code.generator;
 
 
 import org.springframework.boot.SpringApplication;

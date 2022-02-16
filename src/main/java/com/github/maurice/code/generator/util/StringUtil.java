@@ -1,4 +1,4 @@
-package com.fuyu.basic.code.generator.util;
+package com.github.maurice.code.generator.util;
 
 
 import org.apache.commons.lang3.StringUtils;

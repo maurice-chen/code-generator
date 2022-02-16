@@ -1,12 +1,13 @@
-package com.fuyu.basic.code.generator.execute;
+package com.github.maurice.code.generator.execute;
 
-import com.fuyu.basic.code.generator.model.JsonType;
-import com.fuyu.basic.code.generator.model.Table;
-import com.fuyu.basic.code.generator.JavaCodeProperties;
-import com.fuyu.basic.code.generator.model.Column;
-import com.fuyu.basic.code.generator.model.JavaType;
-import com.fuyu.basic.code.generator.util.StringUtil;
+import com.github.maurice.code.generator.model.JsonType;
+import com.github.maurice.code.generator.model.Table;
+import com.github.maurice.code.generator.JavaCodeProperties;
+import com.github.maurice.code.generator.model.Column;
+import com.github.maurice.code.generator.model.JavaType;
+import com.github.maurice.code.generator.util.StringUtil;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -190,7 +191,7 @@ public class TableHandler implements DisposableBean {
             column.setNullable(rs.getBoolean("NULLABLE"));
             column.setDefaultValue(rs.getString("COLUMN_DEF"));
             column.setColumnComment(rs.getString("REMARKS"));
-            column.setAutoincrement(hasColumn(rs, "IS_AUTOINCREMENT") && rs.getBoolean("IS_AUTOINCREMENT"));
+            column.setAutoincrement(hasColumn(rs, "IS_AUTOINCREMENT") && BooleanUtils.toBoolean(rs.getString("IS_AUTOINCREMENT").toLowerCase()));
 
             try(PreparedStatement pc = connection.prepareStatement("show index from " + tableName + " WHERE non_unique = 0 AND key_name != 'PRIMARY' AND column_name = '" + columnName + "'")) {
                 try (ResultSet executeQuery = pc.executeQuery()) {
