@@ -63,7 +63,6 @@ public class ${table.entityName}Controller {
     */
     @PostMapping("find")
     @PreAuthorize("isAuthenticated()")
-    @Plugin(name = "获取全部", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
     public List<${table.entityName}Entity> find(HttpServletRequest request) {
         return ${table.entityVarName}Service.find(queryGenerator.getQueryWrapperByHttpRequest(request));
     }
@@ -79,7 +78,7 @@ public class ${table.entityName}Controller {
      * @see ${table.entityName}Entity
      */
     @PostMapping("page")
-    @Plugin(name = "获取分页", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
+    @Plugin(name = "首页展示", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:page]')")
     public Page<${table.entityName}Entity> page(PageRequest pageRequest, HttpServletRequest request) {
         return ${table.entityVarName}Service.findPage(
@@ -99,7 +98,7 @@ public class ${table.entityName}Controller {
      */
     @GetMapping("get")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:get]')")
-    @Plugin(name = "获取实体", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
+    @Plugin(name = "编辑信息", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
     public ${table.entityName}Entity get(@RequestParam Integer id) {
         return ${table.entityVarName}Service.get(id);
     }
@@ -113,7 +112,7 @@ public class ${table.entityName}Controller {
      */
     @PostMapping("save")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:save]')")
-    @Plugin(name = "保存实体", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true)
+    @Plugin(name = "保存或添加信息", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true)
     public RestResult<Integer> save(@Valid @RequestBody ${table.entityName}Entity entity) {
         ${table.entityVarName}Service.save(entity);
         return RestResult.ofSuccess("保存成功", entity.getId());
@@ -128,7 +127,7 @@ public class ${table.entityName}Controller {
      */
     @PostMapping("delete")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:delete]')")
-    @Plugin(name = "删除实体", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true)
+    @Plugin(name = "删除信息", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true)
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
         ${table.entityVarName}Service.deleteById(ids);
         return RestResult.of("删除" + ids.size() + "条记录成功");

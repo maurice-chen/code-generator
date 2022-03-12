@@ -8,7 +8,7 @@ import lombok.*;
 
 import org.apache.ibatis.type.Alias;
 import com.baomidou.mybatisplus.annotation.*;
-import com.github.dactiv.framework.commons.id.number.NumberIdEntity;
+import com.github.dactiv.framework.mybatis.plus.baisc.support.IntegerVersionEntity;
 
 import java.util.*;
 
@@ -30,21 +30,10 @@ import javax.validation.constraints.*;
 -->
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
 @Alias("${table.entityVarName}")
 @TableName("${table.tableName}")
-public class ${table.entityName}Entity implements NumberIdEntity<Integer>{
-
-    /**
-    * 主键
-    */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
-
-    /**
-    * 创建时间
-    */
-    private Date creationTime = new Date();
+@EqualsAndHashCode(callSuper = true)
+public class ${table.entityName}Entity extends IntegerVersionEntity<Integer> {
 
 <#list table.columns as column>
     <#if ignoreProperties?seq_contains(column.javaVarName) == false>
