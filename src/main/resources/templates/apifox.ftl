@@ -297,7 +297,7 @@
                   "type": "none",
                   "parameters": []
                 },
-                "description": "编辑需要读取信息的接口：\n\n前端：\n\n1.在点击编辑时在调用本接口获取用户信息。\n2.点击添加不需要调用本接口获取信息\n\n权限条件：需要当前用户存在\"prems[${table.pluginName}:get]\"才能使用",
+                "description": "编辑需要读取信息的接口：\n\n权限条件：需要当前用户存在\"prems[${table.pluginName}:get]\"才能使用",
                 "tags": [],
                 "status": "released",
                 "serverId": "",

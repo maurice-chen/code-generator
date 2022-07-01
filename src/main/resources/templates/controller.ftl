@@ -1,13 +1,13 @@
 package ${basePackage}.controller;
 
-import com.github.dactiv.basic.commons.enumeration.ResourceSourceEnum;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.dactiv.framework.commons.RestResult;
+import com.github.dactiv.framework.commons.id.IdEntity;
 import com.github.dactiv.framework.commons.page.Page;
 import com.github.dactiv.framework.commons.page.PageRequest;
 import com.github.dactiv.framework.mybatis.plus.MybatisPlusQueryGenerator;
 import com.github.dactiv.framework.security.enumerate.ResourceType;
 import com.github.dactiv.framework.security.plugin.Plugin;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,9 +44,9 @@ public class ${table.entityName}Controller {
 
     private final ${table.entityName}Service ${table.entityVarName}Service;
 
-    private final MybatisPlusQueryGenerator<?> queryGenerator;
+    private final MybatisPlusQueryGenerator<${table.entityName}Entity> queryGenerator;
 
-    public ${table.entityName}Controller(MybatisPlusQueryGenerator<?> queryGenerator,
+    public ${table.entityName}Controller(MybatisPlusQueryGenerator<${table.entityName}Entity> queryGenerator,
                                          ${table.entityName}Service ${table.entityVarName}Service) {
         this.${table.entityVarName}Service = ${table.entityVarName}Service;
         this.queryGenerator = queryGenerator;
@@ -64,7 +64,9 @@ public class ${table.entityName}Controller {
     @PostMapping("find")
     @PreAuthorize("isAuthenticated()")
     public List<${table.entityName}Entity> find(HttpServletRequest request) {
-        return ${table.entityVarName}Service.find(queryGenerator.getQueryWrapperByHttpRequest(request));
+        QueryWrapper<${table.entityName}Entity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
+        query.orderByDesc(IdEntity.ID_FIELD_NAME);
+        return ${table.entityVarName}Service.find(query);
     }
 
     /**
@@ -78,13 +80,12 @@ public class ${table.entityName}Controller {
      * @see ${table.entityName}Entity
      */
     @PostMapping("page")
-    @Plugin(name = "首页展示", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
+    @Plugin(name = "首页展示")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:page]')")
     public Page<${table.entityName}Entity> page(PageRequest pageRequest, HttpServletRequest request) {
-        return ${table.entityVarName}Service.findPage(
-                pageRequest,
-                queryGenerator.getQueryWrapperByHttpRequest(request)
-        );
+        QueryWrapper<${table.entityName}Entity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
+        query.orderByDesc(IdEntity.ID_FIELD_NAME);
+        return ${table.entityVarName}Service.findPage(pageRequest, query);
     }
 
     /**
@@ -98,7 +99,7 @@ public class ${table.entityName}Controller {
      */
     @GetMapping("get")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:get]')")
-    @Plugin(name = "编辑信息", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE)
+    @Plugin(name = "编辑信息")
     public ${table.entityName}Entity get(@RequestParam Integer id) {
         return ${table.entityVarName}Service.get(id);
     }
@@ -112,7 +113,7 @@ public class ${table.entityName}Controller {
      */
     @PostMapping("save")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:save]')")
-    @Plugin(name = "保存或添加信息", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true)
+    @Plugin(name = "保存或添加信息", audit = true)
     public RestResult<Integer> save(@Valid @RequestBody ${table.entityName}Entity entity) {
         ${table.entityVarName}Service.save(entity);
         return RestResult.ofSuccess("保存成功", entity.getId());
@@ -127,7 +128,7 @@ public class ${table.entityName}Controller {
      */
     @PostMapping("delete")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:delete]')")
-    @Plugin(name = "删除信息", sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE, audit = true)
+    @Plugin(name = "删除信息", audit = true)
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
         ${table.entityVarName}Service.deleteById(ids);
         return RestResult.of("删除" + ids.size() + "条记录成功");
