@@ -113,7 +113,7 @@ public class ${table.entityName}Controller {
      */
     @PostMapping("save")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:save]')")
-    @Plugin(name = "保存或添加信息", audit = true)
+    @Plugin(name = "保存或添加信息", audit = true,operationDataTrace = true)
     public RestResult<Integer> save(@Valid @RequestBody ${table.entityName}Entity entity) {
         ${table.entityVarName}Service.save(entity);
         return RestResult.ofSuccess("保存成功", entity.getId());
@@ -128,7 +128,7 @@ public class ${table.entityName}Controller {
      */
     @PostMapping("delete")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:delete]')")
-    @Plugin(name = "删除信息", audit = true)
+    @Plugin(name = "删除信息", audit = true,operationDataTrace = true)
     public RestResult<?> delete(@RequestParam List<Integer> ids) {
         ${table.entityVarName}Service.deleteById(ids);
         return RestResult.of("删除" + ids.size() + "条记录成功");

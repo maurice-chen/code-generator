@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.annotation.*;
 import com.github.dactiv.framework.mybatis.plus.baisc.support.IntegerVersionEntity;
 
 import java.util.*;
+import java.io.Serial;
 
 <#--
 import javax.persistence.*;
@@ -34,6 +35,9 @@ import javax.validation.constraints.*;
 @TableName("${table.tableName}")
 @EqualsAndHashCode(callSuper = true)
 public class ${table.entityName}Entity extends IntegerVersionEntity<Integer> {
+
+    @Serial
+    private static final long serialVersionUID = ${.now?long};
 
 <#list table.columns as column>
     <#if ignoreProperties?seq_contains(column.javaVarName) == false>
