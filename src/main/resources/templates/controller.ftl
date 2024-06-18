@@ -37,6 +37,7 @@ import ${basePackage}.service.${table.entityName}Service;
     name = "${table.tableComment}",
     id = "${table.pluginName}",
     parent = "system",
+    authority = "perms[${table.pluginName}:page]",
     type = ResourceType.Menu,
     sources = ResourceSourceEnum.CONSOLE_SOURCE_VALUE
 )
@@ -80,7 +81,6 @@ public class ${table.entityName}Controller {
      * @see ${table.entityName}Entity
      */
     @PostMapping("page")
-    @Plugin(name = "首页展示")
     @PreAuthorize("hasAuthority('perms[${table.pluginName}:page]')")
     public Page<${table.entityName}Entity> page(PageRequest pageRequest, HttpServletRequest request) {
         QueryWrapper<${table.entityName}Entity> query = queryGenerator.getQueryWrapperByHttpRequest(request);
